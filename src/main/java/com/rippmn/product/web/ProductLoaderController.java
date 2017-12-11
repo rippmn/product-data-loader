@@ -14,7 +14,7 @@ public class ProductLoaderController {
 	
 	@RequestMapping("/loadProducts")
 	public String loadProducts() {
-		log.debug("returning homepage");
+		log.info("running daily product load");
 		return "completed at:" + new Date().toString();
 	
 	}
