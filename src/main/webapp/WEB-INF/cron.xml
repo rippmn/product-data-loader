@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/loadProducts</url>
+    <target>product-data-loader</target>
+    <description>daily product load job</description>
+    <schedule>every 5 mins</schedule>
+  </cron>
+</cronentries>
