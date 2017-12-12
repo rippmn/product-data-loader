@@ -6,4 +6,9 @@
     <description>daily product load job</description>
     <schedule>every day 04:00</schedule>
   </cron>
+  <cron>
+    <url>/health</url>
+    <description>health keep alive</description>
+    <schedule>every 10 mins</schedule>
+  </cron>
 </cronentries>
