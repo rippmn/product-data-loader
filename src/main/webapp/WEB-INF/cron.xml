@@ -4,6 +4,6 @@
     <url>/loadProducts</url>
     <target>product-data-loader</target>
     <description>daily product load job</description>
-    <schedule>every 5 mins</schedule>
+    <schedule>every day 04:00</schedule>
   </cron>
 </cronentries>
