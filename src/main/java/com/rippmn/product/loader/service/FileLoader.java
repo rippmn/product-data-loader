@@ -2,14 +2,19 @@ package com.rippmn.product.loader.service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URL;
 import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -25,6 +30,7 @@ import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.rippmn.product.ParsedProduct;
 import com.rippmn.product.ProductCategory;
+import com.rippmn.product.loader.persistence.ProductSaver;
 
 @Service
 public class FileLoader {
@@ -34,6 +40,9 @@ public class FileLoader {
 
 	private static final int BUFFER_SIZE = 2 * 1024 * 1024;
 
+	@Autowired
+	private ProductSaver prodRepo;
+	
 	public void saveFile() throws IOException {
 
 		OutputStream out = null;
@@ -78,7 +87,6 @@ public class FileLoader {
 		InputStream in = Channels.newInputStream(readChannel);
 
 		int prds = parseProducts(in);
-		
 		return "Loaded " +prds+ " products";
 	}
 
@@ -114,6 +122,7 @@ public class FileLoader {
 			if (products % 10 == 0) {
 				//System.out.println("save " + prodSaveList.size());
 				//TestGCDS.persistProducts(prodSaveList);
+				prodRepo.persistProducts(prodSaveList);
 				prodSaveList = new ArrayList<ParsedProduct>();
 			}
 		}
@@ -122,7 +131,7 @@ public class FileLoader {
 	if(prodSaveList.size()>0)
 	{
 		//System.out.println("save rest - " + prodSaveList.size());
-		//TestGCDS.persistProducts(prodSaveList);
+		prodRepo.persistProducts(prodSaveList);
 	}
 
 	return products;
