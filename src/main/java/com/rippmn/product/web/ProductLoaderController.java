@@ -23,7 +23,7 @@ public class ProductLoaderController {
 	@RequestMapping("/loadProducts")
 	public String loadProducts() throws IOException {
 		log.info("running daily product load");
-		loader.saveFile();
+		loader.loadProducts();
 		return "completed at:" + new Date().toString();
 	
 	}
@@ -36,11 +36,4 @@ public class ProductLoaderController {
 	
 	}
 	
-	@RequestMapping("/manualLoad")
-	public String manualLoad() throws IOException{
-		log.info("manually loading files");
-		return loader.loadProducts();
-		
-	}
-
 }
