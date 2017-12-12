@@ -1,5 +1,6 @@
 package com.rippmn.product.web;
 
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -31,8 +32,15 @@ public class ProductLoaderController {
 	public String readProducts() throws IOException {
 		log.info("reading daily product load file");
 		
-		return loader.fileInfo();
+		return loader.fileRead();
 	
+	}
+	
+	@RequestMapping("/manualLoad")
+	public String manualLoad() throws IOException{
+		log.info("manually loading files");
+		return loader.loadProducts();
+		
 	}
 
 }
