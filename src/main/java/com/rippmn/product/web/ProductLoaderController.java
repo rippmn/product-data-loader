@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rippmn.product.loader.service.FileLoader;
@@ -33,6 +34,15 @@ public class ProductLoaderController {
 		log.info("reading daily product load file");
 		
 		return loader.fileRead();
+	
+	}
+	
+	@RequestMapping("/loadFromNamedFile")
+	public String loadProducts(@RequestParam("fileName")String fileName) throws IOException {
+		log.info("reading product load file from");
+		
+		String saveMsg = loader.loadProducts(fileName);
+		return saveMsg + " completed at:" + new Date().toString();
 	
 	}
 	

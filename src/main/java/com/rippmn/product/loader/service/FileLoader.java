@@ -74,13 +74,19 @@ public class FileLoader {
 		return sb.toString();
 	}
 
-	public String loadProducts() throws IOException {
-		GcsFilename fileName = new GcsFilename("rippmn-test", "products-batteries.json");
+
+	public String loadProducts(String loadFileName) throws IOException {
+		GcsFilename fileName = new GcsFilename("rippmn-test", loadFileName);
 		GcsInputChannel readChannel = gcsService.openPrefetchingReadChannel(fileName, 0, BUFFER_SIZE);
 		InputStream in = Channels.newInputStream(readChannel);
 
 		int prds = parseProducts(in);
 		return "Loaded " +prds+ " products";
+	
+	}
+	
+	public String loadProducts() throws IOException {
+		return loadProducts("products-batteries.json");
 	}
 
 	
