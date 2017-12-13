@@ -20,7 +20,7 @@ public class ProductSaver {
 		
 		Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 	    
-		String kind = "productNames";
+		String kind = "productNameSearch";
 	    
 		KeyFactory keyFactory = datastore.newKeyFactory().setKind(kind);
 		
