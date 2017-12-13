@@ -46,44 +46,40 @@ public class ProductSaver {
 	
 	private void addSearchPhrases(Builder builder, String productName) {
 		
-		
 		StringTokenizer st = new StringTokenizer(productName.toLowerCase());
 		
 		ArrayList<String> phrases = new ArrayList<String>();
 		
-		phrases.subList(0, 0);
-		
 		String lastToken = null;
+		String middleToken = null;
 		String phrase = null;
 		while(st.hasMoreTokens()) {
 			
+			
 			if(phrase == null) {
 				phrase = st.nextToken();
-				lastToken = st.nextToken();
-				
+				middleToken = getNextString(st);
+				lastToken = getNextString(st);
 			}
 			
-			while(lastToken.length() == 1) {
-				if(!Character.isLetterOrDigit(lastToken.charAt(0))) {
-					lastToken = st.nextToken();
-				} else {
-					break;
-				}
-			}
+			phrases.add(phrase.concat(" ").concat(middleToken).concat(" ").concat(lastToken));
+			phrase = middleToken;
+			middleToken = lastToken;
+			lastToken = getNextString(st);
 			
-			phrases.add(phrase.concat(" ").concat(lastToken));
-			phrase = lastToken;
-			if (st.hasMoreTokens()) {
-				lastToken = st.nextToken();
-			}
+			
 		}
 		
 		if(!phrase.contains(lastToken)) {
-			phrases.add(phrase.concat(" ").concat(lastToken));
+			phrases.add(phrase.concat(" ").concat(middleToken).concat(" ").concat(lastToken));
+			phrases.add(middleToken.concat(" ").concat(lastToken));
 			phrases.add(lastToken);
 		}else if (phrase.equals(lastToken)) {
 			phrases.add(lastToken);
 		}
+		
+		System.out.println(phrases);
+		
 		
 		if(phrases.size() == 1) {
 			builder.set("tag", phrases.get(0));
@@ -92,6 +88,26 @@ public class ProductSaver {
 		}else if(phrases.size() > 2){
 			builder.set("tag", phrases.get(0), phrases.get(1), phrases.subList(2, phrases.size()).toArray(new String[phrases.size()-2]));
 		}
+		
+	}
+	
+	private String getNextString(StringTokenizer st) {
+		
+		String theString = "";
+		
+		if(st.hasMoreTokens()) {
+			theString = st.nextToken();
+		}
+		
+		while(theString.length() == 1) {
+			if(!Character.isLetterOrDigit(theString.charAt(0))) {
+				theString = st.nextToken();
+			} else {
+				break;
+			}
+			
+		}
+		return theString;
 		
 	}
 
