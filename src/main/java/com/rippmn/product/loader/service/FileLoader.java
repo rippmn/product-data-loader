@@ -55,7 +55,7 @@ public class FileLoader {
 	}
 
 	public String fileRead() throws IOException {
-		GcsFilename fileName = new GcsFilename("rippmn-test", "products-batteries.json");
+		GcsFilename fileName = new GcsFilename("product-rippmn", "products-batteries.json");
 		GcsInputChannel readChannel = gcsService.openPrefetchingReadChannel(fileName, 0, BUFFER_SIZE);
 		InputStream in = Channels.newInputStream(readChannel);
 
@@ -76,7 +76,7 @@ public class FileLoader {
 
 
 	public String loadProducts(String loadFileName) throws IOException {
-		GcsFilename fileName = new GcsFilename("rippmn-test", loadFileName);
+		GcsFilename fileName = new GcsFilename("product-rippmn", loadFileName);
 		GcsInputChannel readChannel = gcsService.openPrefetchingReadChannel(fileName, 0, BUFFER_SIZE);
 		InputStream in = Channels.newInputStream(readChannel);
 
