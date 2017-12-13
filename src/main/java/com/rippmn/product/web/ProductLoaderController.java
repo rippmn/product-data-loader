@@ -46,4 +46,10 @@ public class ProductLoaderController {
 	
 	}
 	
+	@RequestMapping("/health")
+	public String health() {
+		return "Alive at " + new Date().toString();
+	}
+	
+	
 }
